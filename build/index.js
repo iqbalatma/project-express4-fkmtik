@@ -9,13 +9,15 @@ const morgan_1 = __importDefault(require("morgan"));
 const compression_1 = __importDefault(require("compression"));
 const helmet_1 = __importDefault(require("helmet"));
 const cors_1 = __importDefault(require("cors"));
+const dotenv_1 = require("dotenv");
 // ROUTES
-const OrganizationRoutes_1 = __importDefault(require("./routes/OrganizationRoutes"));
+const Routes_1 = __importDefault(require("./app/routes/Routes"));
 class App {
     constructor() {
         this.app = (0, express_1.default)();
         this.plugins();
-        this.routes();
+        (0, Routes_1.default)(this.app);
+        (0, dotenv_1.config)();
     }
     plugins() {
         this.app.use(body_parser_1.default.json());
@@ -23,9 +25,6 @@ class App {
         this.app.use((0, compression_1.default)());
         this.app.use((0, helmet_1.default)());
         this.app.use((0, cors_1.default)());
-    }
-    routes() {
-        this.app.use("/api/v2/organizations", OrganizationRoutes_1.default);
     }
 }
 exports.default = App;

@@ -4,9 +4,10 @@ import morgan from "morgan";
 import compression from "compression";
 import helmet from "helmet";
 import cors from "cors";
+import { config as dotenv } from "dotenv";
 
 // ROUTES
-import OrganizationRoutes from "./routes/OrganizationRoutes";
+import Routes from "./app/routes/Routes";
 
 class App {
 	public app: Application;
@@ -14,7 +15,8 @@ class App {
 	constructor() {
 		this.app = express();
 		this.plugins();
-		this.routes();
+		Routes(this.app);
+		dotenv();
 	}
 
 	protected plugins(): void {
@@ -25,9 +27,9 @@ class App {
 		this.app.use(cors());
 	}
 
-	protected routes(): void {
-		this.app.use("/api/v2/organizations", OrganizationRoutes);
-	}
+	// protected routes(): void {
+	// 	this.app.use("/api/v2/organizations", OrganizationRoutes);
+	// }
 }
 
 export default App;
